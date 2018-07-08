@@ -15,6 +15,7 @@ nvm use 6
 - create IAM role
   
 add those policies to the service role: service-role/code-build-big-mouth-service-role
+```
 AWSLambdaFullAccess
 CodeBuildTrustPolicy-big-mouth-1530962089130
 AmazonS3FullAccess
@@ -25,6 +26,15 @@ AmazonAPIGatewayAdministrator
 AmazonCognitoPowerUser
 AWSCloudFormationReadOnlyAccess
 AWSCloudFormationAllAccess
+```
+
+OR 
+
+```
+AdministratorAccess
+```
+
+
 
 - timeout 10m
 

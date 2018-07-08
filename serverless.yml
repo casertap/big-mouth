@@ -4,9 +4,19 @@ plugins:
   - serverless-pseudo-parameters
   - serverless-sam
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, "us-east-1"}
+  dev:
+    api_id: "5ymkmf7cz7"
+  prod:
+    api_id: "npaohfu58k"
+  api_url: "https://${self:custom.${self:custom.stage}.api_id}.execute-api.${self:custom.region}.amazonaws.com/${self:custom.stage}"
+
 provider:
   name: aws
   runtime: nodejs6.10
+  region: ${self:custom.region}
   iamRoleStatements:
     - Effect: Allow
       Action: dynamodb:scan
@@ -23,7 +33,7 @@ functions:
          path: /
          method: get
     environment:
-      restaurants_api: https://5ymkmf7cz7.execute-api.us-east-1.amazonaws.com/dev/restaurants
+      restaurants_api: ${self:custom.api_url}/restaurants
       cognito_user_pool_id: us-east-1_BXKvdrj8y
       cognito_client_id: 5jocffapd6kamako57uoscfsgu
 
@@ -53,7 +63,7 @@ resources:
     restaurantsTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: restaurants
+        TableName: restaurants-${self:custom.stage}
         AttributeDefinitions:
           - AttributeName: name
             AttributeType: S

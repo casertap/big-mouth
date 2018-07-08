@@ -27,6 +27,10 @@ elif [ "$1" = "deploy" ] && [ $# -eq 2 ]; then
 
     npm install
     'node_modules/.bin/sls' deploy -s $STAGE
+elif [ "$1" = "seed" ] && [ $# -eq 1 ]; then
+    npm install
+
+    npm run seed
 else
     instruction
     exit 1
