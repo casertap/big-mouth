@@ -45,7 +45,7 @@ functions:
           method: get
           authorizer: aws_iam
     environment:
-      restaurants_table: restaurants
+      restaurants_table: restaurants-${self:custom.stage}
 
   search-restaurants:
     handler: functions/search-restaurants.handler
@@ -56,7 +56,7 @@ functions:
           authorizer:
             arn: arn:aws:cognito-idp:#{AWS::Region}:#{AWS::AccountId}:userpool/us-east-1_BXKvdrj8y
     environment:
-      restaurants_table: restaurants
+      restaurants_table: restaurants-${self:custom.stage}
 
 resources:
   Resources:
